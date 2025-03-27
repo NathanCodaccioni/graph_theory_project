@@ -28,7 +28,7 @@ def main():
         for i in range(len(nodes)):
             for j in range(len(nodes)):
                 if isinstance(matrix[i][j], int):
-                    print(f"{nodes[i]} -> {nodes[j]} = {matrix[i][j]}")
+                    print(f"{chr(65 + nodes[i])} -> {chr(65 + nodes[j])} = {matrix[i][j]}")
 
         display_matrix(matrix, nodes)
 

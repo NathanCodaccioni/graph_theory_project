@@ -28,9 +28,18 @@ def build_graph(tasks):
     return matrix, all_nodes
 
 def display_matrix(matrix, nodes):
+    #the first row should be a "a" that we called alpha
     print("\nValue Matrix:")
-    header = "    " + "  ".join(f"{node:>2}" for node in nodes)
+    
+    # Map nodes to letters (A, B, C, ...)
+    node_labels = [chr(65 + i - 1) for i in range(len(nodes))]
+    node_labels[0] = 'a'  # Start node
+
+    # Display header row with letters
+    header = "    " + "  ".join(f"{label:>2}" for label in node_labels)
     print(header)
+    
+    # Display each row with corresponding letter and matrix values
     for i, row in enumerate(matrix):
-        line = f"{nodes[i]:>2}  " + "  ".join(f"{str(cell):>2}" for cell in row)
+        line = f"{node_labels[i]:>2}  " + "  ".join(f"{str(cell):>2}" for cell in row)
         print(line)
