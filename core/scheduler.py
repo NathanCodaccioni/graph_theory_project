@@ -26,7 +26,7 @@ def detect_cycle_and_compute_ranks(matrix, nodes):
     print("\n* Detecting a cycle\n* Method of eliminating entry points")
 
     while queue:
-        print(f"Entry points: {list(queue)}")
+        print(f"Entry points: {[chr(97) if node == 0 else chr(65 + node - 1) for node in queue]}")
         for _ in range(len(queue)):
             u = queue.popleft()
             ranks[u] = step
@@ -43,7 +43,8 @@ def detect_cycle_and_compute_ranks(matrix, nodes):
         print("-> There is NO cycle")
         print("\nRanks of vertices:")
         for node in sorted(ranks):
-            print(f"Node {node}: Rank {ranks[node]}")
+            label = chr(97) if node == 0 else chr(65 + node - 1)
+            print(f"Node {label}: Rank {ranks[node]}")
         return ranks
 
 def compute_earliest_dates(matrix, nodes, ranks):
@@ -56,7 +57,8 @@ def compute_earliest_dates(matrix, nodes, ranks):
                 earliest[v] = max(earliest[v], earliest[u] + cost)
     print("\nEarliest Dates:")
     for node in earliest:
-        print(f"Node {node}: {earliest[node]}")
+        label = chr(97) if node == 0 else chr(65 + node - 1)
+        print(f"Node {label}: {earliest[node]}")
     return earliest
 
 def compute_latest_dates(matrix, nodes, ranks, earliest):
@@ -69,19 +71,22 @@ def compute_latest_dates(matrix, nodes, ranks, earliest):
                 latest[u] = min(latest[u], latest[v] - cost)
     print("\nLatest Dates:")
     for node in latest:
-        print(f"Node {node}: {latest[node]}")
+        label = chr(97) if node == 0 else chr(65 + node - 1)
+        print(f"Node {label}: {latest[node]}")
     return latest
 
 def compute_floats(earliest, latest):
     floats = {}
     print("\nFloat (margin) for each task:")
     for node in earliest:
+        label = chr(97) if node == 0 else chr(65 + node - 1)
         floats[node] = latest[node] - earliest[node]
-        print(f"Node {node}: {floats[node]}")
+        print(f"Node {label}: {floats[node]}")
     return floats
 
 def find_critical_paths(floats):
     print("\nCritical Path:")
     critical_nodes = [node for node, fl in floats.items() if fl == 0]
-    print(" -> ".join(map(str, critical_nodes)))
+    critical_path_labels = [chr(97) if node == 0 else chr(65 + node - 1) for node in critical_nodes]
+    print(" -> ".join(critical_path_labels))
     return critical_nodes
